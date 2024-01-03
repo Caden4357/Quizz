@@ -5,7 +5,6 @@ let choices = ['A', 'B', 'C', 'D']
 const Question = ({ question, currentQuestion, setCurrentQuestion, score, setScore }) => {
 
     const [selectedAnswer, setSelectedAnswer] = useState('')
-    const [checked, setChecked] = useState(false)
     const [submitted, setSubmitted] = useState(false)
 
     const nextQuestion = () => {
@@ -28,8 +27,8 @@ const Question = ({ question, currentQuestion, setCurrentQuestion, score, setSco
         <motion.div
             className='rounded-lg p-10 bg-slate-400 bs'
             initial={{  y: -1000 }}
-            animate={{  y: 0 }}
-            transition={{ duration: 5, type: 'spring', bounce: .25, stiffness: 100, ease: 'easeInOut'}}
+            animate={{  y: -150 }}
+            transition={{ duration: 5, type: 'spring', bounce: .25, stiffness: 150, ease: 'easeInOut'}}
         >
             
             <div className='w-2/4 mx-auto p-16 bg-indigo-900 bs-question rounded-2xl'>
@@ -37,7 +36,7 @@ const Question = ({ question, currentQuestion, setCurrentQuestion, score, setSco
                 <ul>
                     {question.incorrectAnswers.map((answer, idx) => (
                         <div key={idx} style={{ width: '300px', textAlign: 'left', margin: '0 auto' }}>
-                            <input name='answer' type='radio' onClick={() => handleChange(answer)} />
+                            <input name='answer' type='radio' onClick={() => handleChange(answer)} defaultChecked={false}/>
                             <label className='text-xl ml-2' ><span className='mr-1'>{choices[idx]}.)</span> {answer}</label>
                         </div>
                     ))}
