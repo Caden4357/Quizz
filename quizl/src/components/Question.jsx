@@ -4,7 +4,7 @@ const Question = ({ question, currentQuestion, setCurrentQuestion, score, setSco
 
     const [selectedAnswer, setSelectedAnswer] = useState('')
     const [checked, setChecked] = useState(false)
-    const [finalScore, setFinalScore] = useState(0)
+    const [submitted, setSubmitted] = useState(false)
     const nextQuestion = () => {
         if (selectedAnswer === question.correctAnswer) {
             setScore(score + 1)
@@ -16,7 +16,10 @@ const Question = ({ question, currentQuestion, setCurrentQuestion, score, setSco
         setSelectedAnswer(answer)
     }
     const submitQuiz = () => {
-
+        if (selectedAnswer === question.correctAnswer) {
+            setScore(score + 1)
+        }
+        setSubmitted(true)
     }
     return (
         <div>
@@ -31,13 +34,13 @@ const Question = ({ question, currentQuestion, setCurrentQuestion, score, setSco
                     ))}
                 </ul>
                 {
-                    currentQuestion === 9 ? <button onClick={submitQuiz}>Submit</button> : <button onClick={nextQuestion}>Next {currentQuestion + 1}/10</button>
+                    currentQuestion === 9 ? <button className='border p-2 bg-purple-400 rounded-xl font-bold' onClick={submitQuiz}>Submit</button> : <button className='border p-2 bg-purple-400 rounded-xl font-bold' onClick={nextQuestion}>Next {currentQuestion + 1}/10</button>
                 }
                 {
-                    currentQuestion === 9 &&
+                    submitted &&
                     <div>
                         <h2>Final Score: {score}/10</h2>
-                        <button onClick={() => window.location.reload()}>Restart</button>    
+                        <button className='border p-2 bg-purple-400 rounded-xl font-bold' onClick={() => window.location.reload()}>Restart</button>    
                     </div>
 
                 }

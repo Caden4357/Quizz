@@ -6,15 +6,16 @@ function App() {
   const [score, setScore] = useState(0)
   const [questions, setQuestions] = useState([])
   const [currentQuestion, setCurrentQuestion] = useState(0)
-  const beginQuiz = async () => {
+  const [hideButton, setHideButton] = useState(false)
+  const beginQuiz = async (e) => {
     try{
       const response = await axios.get('https://the-trivia-api.com/v2/questions')
       response.data.forEach((question) => {
         question.incorrectAnswers.push(question.correctAnswer)
         question.incorrectAnswers.sort(() => Math.random() - 0.5)
       })
-      console.log(response);
       setQuestions(response.data)
+      e.target.classList.toggle('hidden')
     }
     catch(error){
       console.log(error)
@@ -22,20 +23,16 @@ function App() {
   }
   return (
     <>
-      <h1>Quizl</h1>
-      <button onClick={beginQuiz}>Click to begin!</button>
-      <h2>Score: {score}</h2>
+      <h1 className='text-6xl underline mb-4 text-purple-600'>Quizl</h1>
+      <h1 className='text-4xl underline mb-4 text-purple-600'>Random Trivia Game</h1>
+
+      <button className='border p-2 bg-purple-400 rounded-xl font-bold' onClick={beginQuiz} >Click to begin!</button>
       <div>
         {
           questions.length > 0 && (
             <Question question={questions[currentQuestion]} setScore={setScore} score={score} currentQuestion={currentQuestion} setCurrentQuestion={setCurrentQuestion} />
           )
         }
-        {/* {
-          questions.map((question) => (
-            <Question question={question} setScore={setScore} score={score} />
-          ))
-        } */}
       </div>
     </>
   )
