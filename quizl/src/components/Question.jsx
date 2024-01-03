@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion } from "framer-motion"
+
+let choices = ['A', 'B', 'C', 'D']
 const Question = ({ question, currentQuestion, setCurrentQuestion, score, setScore }) => {
 
     const [selectedAnswer, setSelectedAnswer] = useState('')
@@ -24,19 +26,19 @@ const Question = ({ question, currentQuestion, setCurrentQuestion, score, setSco
     }
     return (
         <motion.div
-            className='border p-10 bg-slate-400'
+            className='rounded-lg p-10 bg-slate-400 bs'
             initial={{  y: -1000 }}
             animate={{  y: 0 }}
-            transition={{ duration: 5, type: 'spring', bounce: .25, stiffness: 100 }}
+            transition={{ duration: 5, type: 'spring', bounce: .25, stiffness: 100, ease: 'easeInOut'}}
         >
             
-            <div className='border border-red-500 w-2/4 mx-auto p-16 bg-indigo-900'>
-                <h3 className='text-2xl'>{question.question.text}</h3>
+            <div className='w-2/4 mx-auto p-16 bg-indigo-900 bs-question rounded-2xl'>
+                <h3 className='text-2xl mb-6'>{question.question.text}</h3>
                 <ul>
                     {question.incorrectAnswers.map((answer, idx) => (
                         <div key={idx} style={{ width: '300px', textAlign: 'left', margin: '0 auto' }}>
                             <input name='answer' type='radio' onClick={() => handleChange(answer)} />
-                            <label className='text-xl ml-2' >{answer}</label>
+                            <label className='text-xl ml-2' ><span className='mr-1'>{choices[idx]}.)</span> {answer}</label>
                         </div>
                     ))}
                 </ul>
