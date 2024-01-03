@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import './App.css'
 import axios from 'axios'
-import Question from './components/Question'
-import { motion } from 'framer-motion'
+import Homepage from './components/Homepage/Homepage'
 import Nav from './components/Nav'
+import { Route, Routes } from 'react-router-dom'
+import Category from './components/categories/Category'
+import Login from './components/LoginReg/Login'
+import Reg from './components/LoginReg/Reg'
 // ! add a feature to get a hint for the question
 // ! Timed rounds
 // ! Add a leaderboard
@@ -17,7 +20,7 @@ function App() {
 
   const beginQuiz = async (e) => {
     try {
-      const response = await axios.get('https://the-trivia-api.com/v2/questions')
+      const response = await axios.get('https://the-trivia-api.com/v2/questions?limit=10')
       console.log(response.data);
       response.data.forEach((question) => {
         question.incorrectAnswers.push(question.correctAnswer)
@@ -34,20 +37,13 @@ function App() {
   }
   return (
     <div>
-      <Nav beginQuiz={beginQuiz} />
-      <div>
-        {
-          questions.length > 0 && (
-            <motion.div
-              initial={{ scale: .95 }}
-              animate={{ scale: 1.25}}
-              transition={{ duration: 1, ease: 'easeIn', delay: 1 }}
-            >
-              <Question question={questions[currentQuestion]} setScore={setScore} score={score} currentQuestion={currentQuestion} setCurrentQuestion={setCurrentQuestion} />
-            </motion.div>
-          )
-        }
-      </div>
+      <Nav beginQuiz={beginQuiz}/>
+      <Routes>
+        <Route path='/' element={<Homepage questions={questions} setScore={setScore} score={score} currentQuestion={currentQuestion} setCurrentQuestion={setCurrentQuestion} />} />
+        <Route path='/categories' element={<Category/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/register' element={<Reg/>}/>
+      </Routes>
     </div>
   )
 }
