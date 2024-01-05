@@ -1,36 +1,18 @@
 import React, { useContext } from 'react';
 import { QuizContext } from '../../context/QuizContext';
 import { motion } from 'framer-motion'
-import Question from '../Question'
-import axios from 'axios';
+import startQuiz from '../../functions/Quiz';
 import { Link, useNavigate } from 'react-router-dom'
 const Homepage = (props) => {
     const navigate = useNavigate()
     const {currentGame, setCurrentGame} = useContext(QuizContext)
 
     const beginQuiz = async (e) => {
-        try {
-            const response = await axios.get('https://the-trivia-api.com/v2/questions?limit=10')
-            response.data.forEach((question) => {
-                question.incorrectAnswers.push(question.correctAnswer)
-                question.incorrectAnswers = question.incorrectAnswers.map((answer) => {
-                    return {
-                        text: answer,
-                        isChecked: false
-                    }
-                })
-                question.incorrectAnswers.sort(() => Math.random() - 0.5)
-            })
-            setCurrentGame({ ...currentGame, questions: response.data })
-            setTimeout(() => {
-                e.target.classList.toggle('hidden')
-                navigate('/quiz')
-            }, 200);
-
-        }
-        catch (error) {
-            console.log(error)
-        }
+        const game = await startQuiz(e)
+        setCurrentGame({...currentGame, questions: game, questionIdx: 0})
+        setTimeout(() => {
+            navigate('/quiz')
+        }, 200);
     }
 
     return (
