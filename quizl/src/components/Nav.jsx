@@ -8,7 +8,8 @@ const Nav = ({ beginQuiz }) => {
                 <button className='text-xl underline'>Leaderboard</button>
                 <Link to={'/login'} className='text-xl underline'>Login</Link>
             </div>
-            <h1 className='text-8xl underline mb-4 text-purple-600'>QuizL</h1>
+            <Link to={'/'}><h1 className='text-8xl underline mb-4 text-purple-600'>QuizL</h1></Link>
+            
             <h1 className='text-4xl underline mb-4 text-purple-600'>All In One Trivia Game</h1>
         </div>
     )

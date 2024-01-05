@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { QuizContext } from '../context/QuizContext';
 import { motion } from "framer-motion"
 
@@ -9,21 +9,23 @@ const Question = () => {
     const [selectedAnswer, setSelectedAnswer] = useState('')
     const [submitted, setSubmitted] = useState(false)
 
+
     useEffect(() => {
-        setCurrentQuestion(currentGame.questions[currentGame.questionIdx])
+        setCurrentQuestion(currentGame.questions[currentGame.questionIdx]);
     }, [currentGame.questionIdx])
+
     const nextQuestion = () => {
-        if (selectedAnswer === currentQuestion.correctAnswer) {
-            setCurrentGame({...currentGame, score:currentGame.score + 1})
+        if (selectedAnswer === currentQuestion.correctAnswer.id) {
+            setCurrentGame({...currentGame, score:currentGame.score++})
         }
         setCurrentGame({...currentGame, questionIdx:currentGame.questionIdx+1})
+        setSelectedAnswer(null)
     }
-    const handleChange = (answer) => {
-        // console.log(answer);
-        setSelectedAnswer(answer)
+    const handleChange = (answerId) => {
+        setSelectedAnswer(answerId)
     }
     const submitQuiz = () => {
-        if (selectedAnswer === currentQuestion.correctAnswer) {
+        if (selectedAnswer === currentQuestion.correctAnswer.id) {
             setCurrentGame({...currentGame, score:currentGame.score + 1})
         }
         setSubmitted(true)
@@ -42,8 +44,14 @@ const Question = () => {
                 <ul>
                     {currentQuestion?.incorrectAnswers?.length > 0 && 
                     currentQuestion.incorrectAnswers.map((answer, idx) => (
-                        <div key={idx} style={{ width: '300px', textAlign: 'left', margin: '0 auto' }}>
-                            <input name='answer' type='radio' onClick={() => handleChange(answer)} defaultChecked={false}/>
+                        <div key={answer.id} style={{ width: '300px', textAlign: 'left', margin: '0 auto' }}>
+                            <input 
+                                name='answer' 
+                                type='radio' 
+                                value={answer.id}
+                                checked={selectedAnswer === answer.id}
+                                onChange={() => handleChange(answer.id)}
+                            />
                             <label className='text-xl ml-2' ><span className='mr-1'>{choices[idx]}.)</span> {answer}</label>
                         </div>
                     ))}
@@ -54,7 +62,7 @@ const Question = () => {
                 {
                     submitted &&
                     <div>
-                        <h2>Final Score: {currentQuestion.score}/10</h2>
+                        <h2>Final Score: {currentGame.score}/10</h2>
                         <button className='m-4 text-lg border p-2 bg-purple-400 rounded-xl font-bold text-black' onClick={() => window.location.reload()}>Restart</button>    
                     </div>
 
