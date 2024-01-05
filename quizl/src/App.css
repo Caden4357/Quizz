@@ -7,8 +7,8 @@
 *{
   font-family: 'Rubik Doodle Shadow';
 }
-body{
-  overflow: hidden;
+body::-webkit-scrollbar {
+  display: none;
 }
 .bs{
   /* box shadow */
