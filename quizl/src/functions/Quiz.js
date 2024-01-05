@@ -1,13 +1,7 @@
 import axios from 'axios';
-const startQuiz = async (e) => {
-    let category;
+const startQuiz = async (category) => {
     let url;
-    e.target.alt? category = e.target.alt : category = null;
-    if (category) {
-        url = `https://the-trivia-api.com/v2/questions?categories=${category}&limit=10`
-    } else {
-        url = `https://the-trivia-api.com/v2/questions?limit=10`
-    }
+    category? url = `https://the-trivia-api.com/v2/questions?categories=${category}&limit=10` : url = `https://the-trivia-api.com/v2/questions?limit=10`
     try {
         const response = await axios.get(url)
         response.data.forEach((question) => {
