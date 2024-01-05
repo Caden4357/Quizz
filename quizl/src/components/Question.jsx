@@ -1,9 +1,10 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { QuizContext } from '../context/QuizContext';
 import { motion } from "framer-motion"
-
+import { useNavigate } from 'react-router-dom'
 let choices = ['A', 'B', 'C', 'D']
 const Question = () => {
+    const navigate = useNavigate()
     const {currentGame, setCurrentGame} = useContext(QuizContext)
     const [currentQuestion, setCurrentQuestion] = useState({})
     const [selectedAnswer, setSelectedAnswer] = useState('')
@@ -65,7 +66,7 @@ const Question = () => {
                     submitted &&
                     <div>
                         <h2>Final Score: {currentGame.score}/10</h2>
-                        <button className='m-4 text-lg border p-2 bg-purple-400 rounded-xl font-bold text-black' onClick={() => window.location.reload()}>Restart</button>    
+                        <button className='m-4 text-lg border p-2 bg-purple-400 rounded-xl font-bold text-black' onClick={() => navigate('/')}>Home</button>    
                     </div>
 
                 }
