@@ -34,7 +34,7 @@ const Question = () => {
     }
     return (
         <motion.div
-            className='rounded-lg p-10 bg-slate-400 bs'
+            className='mt-40 rounded-lg p-10 bg-slate-400 bs'
             initial={{  y: -1000 }}
             animate={{  y: -150 }}
             transition={{ duration: 5, type: 'spring', bounce: .25, stiffness: 150, ease: 'easeInOut'}}
