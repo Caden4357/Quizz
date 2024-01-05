@@ -15,14 +15,16 @@ const Question = () => {
     }, [currentGame.questionIdx])
 
     const nextQuestion = () => {
-        if (selectedAnswer === currentQuestion.correctAnswer.id) {
+        if (selectedAnswer === currentQuestion.correctAnswer) {
             setCurrentGame({...currentGame, score:currentGame.score++})
         }
         setCurrentGame({...currentGame, questionIdx:currentGame.questionIdx+1})
         setSelectedAnswer(null)
     }
-    const handleChange = (answerId) => {
-        setSelectedAnswer(answerId)
+    const handleChange = (answer) => {
+        setSelectedAnswer(answer.text)
+        setCurrentQuestion({...currentQuestion, incorrectAnswers: currentQuestion.incorrectAnswers.map((ansr) => ansr.text === answer.text ? {...ansr, isChecked: true} : {...ansr, isChecked: false})})
+        
     }
     const submitQuiz = () => {
         if (selectedAnswer === currentQuestion.correctAnswer.id) {
@@ -44,15 +46,15 @@ const Question = () => {
                 <ul>
                     {currentQuestion?.incorrectAnswers?.length > 0 && 
                     currentQuestion.incorrectAnswers.map((answer, idx) => (
-                        <div key={answer.id} style={{ width: '300px', textAlign: 'left', margin: '0 auto' }}>
+                        <div key={idx} style={{ width: '300px', textAlign: 'left', margin: '0 auto' }}>
                             <input 
                                 name='answer' 
                                 type='radio' 
-                                value={answer.id}
-                                checked={selectedAnswer === answer.id}
-                                onChange={() => handleChange(answer.id)}
+                                // value={answer.text}
+                                checked={answer.isChecked}
+                                onChange={() => handleChange(answer)}
                             />
-                            <label className='text-xl ml-2' ><span className='mr-1'>{choices[idx]}.)</span> {answer}</label>
+                            <label className='text-xl ml-2' ><span className='mr-1'>{choices[idx]}.)</span> {answer.text}</label>
                         </div>
                     ))}
                 </ul>

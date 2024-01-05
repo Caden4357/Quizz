@@ -12,6 +12,12 @@ const Homepage = (props) => {
             console.log(response.data);
             response.data.forEach((question) => {
                 question.incorrectAnswers.push(question.correctAnswer)
+                question.incorrectAnswers = question.incorrectAnswers.map((answer) => {
+                    return {
+                        text: answer,
+                        isChecked: false
+                    }
+                })
                 question.incorrectAnswers.sort(() => Math.random() - 0.5)
             })
             setCurrentGame({ ...currentGame, questions: response.data })
