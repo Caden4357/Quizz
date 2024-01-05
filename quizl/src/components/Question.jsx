@@ -28,7 +28,7 @@ const Question = () => {
         
     }
     const submitQuiz = () => {
-        if (selectedAnswer === currentQuestion.correctAnswer.id) {
+        if (selectedAnswer === currentQuestion.correctAnswer) {
             setCurrentGame({...currentGame, score:currentGame.score + 1})
         }
         setSubmitted(true)
@@ -43,6 +43,7 @@ const Question = () => {
             
             <div className='w-2/4 mx-auto p-16 bg-indigo-900 bs-question rounded-2xl'>
                 
+                <h3 className='text-2xl mb-6'>Category: {currentQuestion?.category}</h3>
                 <h3 className='text-2xl mb-6'>{currentQuestion?.question?.text}</h3>
                 <ul>
                     {currentQuestion?.incorrectAnswers?.length > 0 && 

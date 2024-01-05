@@ -8,7 +8,7 @@ const Homepage = (props) => {
     const {currentGame, setCurrentGame} = useContext(QuizContext)
 
     const beginQuiz = async (e) => {
-        const game = await startQuiz(e)
+        const game = await startQuiz()
         setCurrentGame({...currentGame, questions: game, questionIdx: 0})
         setTimeout(() => {
             navigate('/quiz')
