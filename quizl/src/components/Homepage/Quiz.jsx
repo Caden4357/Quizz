@@ -15,7 +15,7 @@ const Quiz = (props) => {
                     // transition={{ duration: 1, ease: 'easeIn', delay: 1 }}
                     
                     >
-                        <Question />
+                        <Question/>
                     </motion.div>
                 )
             }
