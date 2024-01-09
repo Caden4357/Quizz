@@ -3,8 +3,9 @@ import { QuizContext } from '../context/QuizContext';
 import { motion } from "framer-motion"
 import { useNavigate } from 'react-router-dom'
 import Countdown from 'react-countdown';
+import './Question.css'
 let choices = ['A', 'B', 'C', 'D']
-const Question = ({time}) => {
+const Question = ({ time }) => {
     const navigate = useNavigate()
     const { currentGame, setCurrentGame } = useContext(QuizContext)
     const [currentQuestion, setCurrentQuestion] = useState({})
@@ -34,12 +35,18 @@ const Question = ({time}) => {
         }
         setSubmitted(true)
     }
-    const renderer = ({ hours, minutes, seconds, completed, api }) => {
+    const renderer = ({ seconds, completed, api }) => {
         if (completed) {
             nextQuestion()
         } else {
             api.start()
-            return <span className='text-xl text-red-500 font-sans font-bold'>{seconds}</span>
+            const progressPercentage = ((30 - seconds) / 30) * 100;
+            return <div id="countdown">
+                <div id="countdown-number"></div>
+                <svg>
+                    <circle r="18" cx="20" cy="20"></circle>
+                </svg>
+            </div>
         }
     }
     return (
@@ -52,7 +59,7 @@ const Question = ({time}) => {
 
             <div className='w-2/4 mx-auto p-16 bg-indigo-900 bs-question rounded-2xl'>
 
-                <Countdown date={time? Date.now() + time: Date.now() + 30000} renderer={renderer}/>
+                <Countdown date={time ? Date.now() + time : Date.now() + 30000} renderer={renderer} />
                 <h3 className='text-2xl mb-6'>Category: {currentQuestion?.category}</h3>
                 <h3 className='text-2xl mb-6'>{currentQuestion?.question?.text}</h3>
                 <ul>
@@ -62,7 +69,6 @@ const Question = ({time}) => {
                                 <input
                                     name='answer'
                                     type='radio'
-                                    // value={answer.text}
                                     checked={answer.isChecked}
                                     onChange={() => handleChange(answer)}
                                 />

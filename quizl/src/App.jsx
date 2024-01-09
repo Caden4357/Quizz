@@ -17,6 +17,7 @@ import Quiz from './components/Homepage/Quiz'
 // ? add a feature to get a hint for the question
 // ? Login and register
 // ? Add a leaderboard
+// ? Mobile version with react native
 // ? PVP
 
 function App() {
