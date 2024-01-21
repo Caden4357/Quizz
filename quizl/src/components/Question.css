@@ -4,10 +4,10 @@ svg circle {
     stroke-dasharray: 113px;
     stroke-dashoffset: 0px;
     stroke-linecap: round;
-    stroke-width: 2px;
+    stroke-width: 4px;
     stroke: white;
     height: 100px;
-    fill: red;
+    /* fill: red; */
     animation: countdown 30s linear infinite forwards;
 }
 
