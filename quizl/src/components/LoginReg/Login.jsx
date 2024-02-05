@@ -30,6 +30,9 @@ const Login = (props) => {
         >
             <h2 className='text-4xl my-8'>Login</h2>
             <form className='flex flex-col gap-4' onSubmit={submitHandler}>
+                {
+                    error ? <p className='text-red-500'>{error}</p> : ''
+                }
                 <input type="text" placeholder='Email' className='border-2 border-black rounded-xl p-2 text-black' onChange={(e) => setEmail(e.target.value)}/>
                 <input type="password" placeholder='Password' className='border-2 border-black rounded-xl p-2 text-black' onChange={(e) => setPassword(e.target.value)}/>
                 <button className='bg-black text-white rounded-xl p-2'>Login</button>
