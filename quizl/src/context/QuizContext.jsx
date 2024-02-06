@@ -8,6 +8,7 @@ export const QuizProvider = (props) => {
     const [currentGame, setCurrentGame] = useState({
         score: 0,
         questions: [],
+        currentQuestion: {},
         questionIdx: 0
     })
 

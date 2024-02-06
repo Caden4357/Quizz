@@ -7,11 +7,12 @@ import Category from './components/categories/Category'
 import Login from './components/LoginReg/Login'
 import Reg from './components/LoginReg/Reg'
 import Quiz from './components/Homepage/Quiz'
+import { UserProvider } from './context/UserContext'
 // ? Add a feature to choose a category ✔️
 // ? Add context for question and score ✔️
-// ? Login and register 
-// ! logout 
-// ! User Context 
+// ? Login and register ✔️
+// ? logout ✔️
+// ? User Context ✔️
 // ? Timer on each question 🐛 BUG HERE 
 // ? Allow user to choose the time for each question from a list of options (10, 15, 30 seconds) for example
 // ? Add a feature to choose the difficulty of the questions
@@ -25,16 +26,18 @@ import Quiz from './components/Homepage/Quiz'
 function App() {
   return (
     <div>
-      <QuizProvider>
-        <Nav />
-        <Routes>
-          <Route path='/' element={<Homepage/>} />
-          <Route path='/quiz' element={<Quiz/>} />
-          <Route path='/categories' element={<Category />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Reg />} />
-        </Routes>
-      </QuizProvider>
+      <UserProvider>
+        <QuizProvider>
+          <Nav />
+          <Routes>
+            <Route path='/' element={<Homepage />} />
+            <Route path='/quiz' element={<Quiz />} />
+            <Route path='/categories' element={<Category />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Reg />} />
+          </Routes>
+        </QuizProvider>
+      </UserProvider>
     </div>
   )
 }

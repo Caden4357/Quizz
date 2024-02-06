@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import axios from 'axios';
 import {motion} from 'framer-motion';
 import {Link, useNavigate} from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
 const Login = (props) => {  
+    const {user, setUser} = useContext(UserContext)
     const navigate = useNavigate()
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmail] = useState('c@aol.com')
+    const [password, setPassword] = useState('12345678')
     const [error, setError] = useState('')
 
     const submitHandler = (e) => {
@@ -13,6 +15,7 @@ const Login = (props) => {
         axios.post('http://localhost:8000/api/login', {email, password}, {withCredentials: true})
             .then(res => {
                 console.log(res.data)
+                setUser({...user, name: res.data.name, email: res.data.email, loggedIn: true})
                 navigate('/')
             })
             .catch(err => {
@@ -33,8 +36,8 @@ const Login = (props) => {
                 {
                     error ? <p className='text-red-500'>{error}</p> : ''
                 }
-                <input type="text" placeholder='Email' className='border-2 border-black rounded-xl p-2 text-black' onChange={(e) => setEmail(e.target.value)}/>
-                <input type="password" placeholder='Password' className='border-2 border-black rounded-xl p-2 text-black' onChange={(e) => setPassword(e.target.value)}/>
+                <input type="text" placeholder='Email' className='border-2 border-black rounded-xl p-2 text-black' onChange={(e) => setEmail(e.target.value)} value={email}/>
+                <input type="password" placeholder='Password' className='border-2 border-black rounded-xl p-2 text-black' onChange={(e) => setPassword(e.target.value)} value={password}/>
                 <button className='bg-black text-white rounded-xl p-2'>Login</button>
             </form>
             <p className='my-4'>Don't have an account? <Link to='/register' className='text-blue-500'>Register</Link></p>
