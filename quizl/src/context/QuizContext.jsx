@@ -6,6 +6,7 @@ export const QuizContext = createContext();
 
 export const QuizProvider = (props) => {
     const [currentGame, setCurrentGame] = useState({
+        category: '',
         score: 0,
         questions: [],
         currentQuestion: {},

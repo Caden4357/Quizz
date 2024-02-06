@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import { QuizContext } from '../context/QuizContext';
 import { motion } from "framer-motion"
 import { useNavigate } from 'react-router-dom'
@@ -13,7 +14,7 @@ const Question = ({ time }) => {
 
 
     useEffect(() => {
-        setCurrentGame({...currentGame, currentQuestion:currentGame.questions[currentGame.questionIdx]});
+        setCurrentGame({ ...currentGame, currentQuestion: currentGame.questions[currentGame.questionIdx] });
     }, [currentGame.questionIdx])
 
     const nextQuestion = () => {
@@ -25,12 +26,16 @@ const Question = ({ time }) => {
     }
     const handleChange = (answer) => {
         setSelectedAnswer(answer.text)
-        console.log(answer.text, selectedAnswer, currentGame.currentQuestion.correctAnswer);
-        // ! Getting error currentQuestion is not defined why?
 
-
-        setCurrentGame({ ...currentGame, currentQuestion: {...currentGame.currentQuestion, incorrectAnswers:currentGame.currentQuestion.incorrectAnswers.map((ansr) => ansr.text === answer.text ? { ...ansr, isChecked: true } : { ...ansr, isChecked: false })} })
-        // setCurrentGame({ ...currentGame, currentQuestion: {...currentQuestion, incorrectAnswers:currentQuestion.incorrectAnswers.map((ansr) => ansr.text === answer.text ? { ...ansr, isChecked: true } : { ...ansr, isChecked: false })} })
+        setCurrentGame(
+            {
+                ...currentGame,
+                currentQuestion:
+                {
+                    ...currentGame.currentQuestion,
+                    incorrectAnswers: currentGame.currentQuestion.incorrectAnswers.map((ansr) => ansr.text === answer.text ? { ...ansr, isChecked: true } : { ...ansr, isChecked: false })
+                }
+            })
 
     }
     const submitQuiz = () => {
@@ -38,6 +43,16 @@ const Question = ({ time }) => {
             setCurrentGame({ ...currentGame, score: currentGame.score + 1 })
         }
         setSubmitted(true)
+        const finalGame = {
+            category: currentGame.category,
+            score: currentGame.score,
+            numberOfQuestions: currentGame.questions.length
+        }
+        axios.post('http://localhost:8000/api/post/quiz', finalGame, { withCredentials: true })
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => console.log(err)) 
     }
     const renderer = ({ seconds, completed, api }) => {
         if (completed) {
@@ -46,9 +61,9 @@ const Question = ({ time }) => {
         else {
             api.start()
             const progressPercentage = ((30 - seconds) / 30) * 100;
-            return <svg style={{width:'50px', height:'50px', margin:'0px auto'}}>
-                    <circle r="18" cx="20" cy="20"></circle>
-                </svg>
+            return <svg style={{ width: '50px', height: '50px', margin: '0px auto' }}>
+                <circle r="18" cx="20" cy="20"></circle>
+            </svg>
         }
     }
     return (
@@ -78,15 +93,14 @@ const Question = ({ time }) => {
                             </div>
                         ))}
                 </ul>
+
                 {
-                    currentGame.questionIdx === 9 ? <button className='m-4 text-lg border p-2 bg-purple-400 rounded-xl font-bold text-black' onClick={submitQuiz}>Submit</button> : <button className='m-4 text-lg border p-2 bg-purple-400 rounded-xl font-bold text-black' onClick={nextQuestion}>Next {currentGame.questionIdx + 1}/10</button>
-                }
-                {
-                    submitted &&
-                    <div>
-                        <h2>Final Score: {currentGame.score}/10</h2>
-                        <button className='m-4 text-lg border p-2 bg-purple-400 rounded-xl font-bold text-black' onClick={() => navigate('/')}>Home</button>
-                    </div>
+                    submitted ?
+                        <div>
+                            <h2>Final Score: {currentGame.score}/5</h2>
+                            <button className='m-4 text-lg border p-2 bg-purple-400 rounded-xl font-bold text-black' onClick={() => navigate('/')}>Home</button>
+                        </div> :
+                        currentGame.questionIdx === 4 ? <button className='m-4 text-lg border p-2 bg-purple-400 rounded-xl font-bold text-black' onClick={submitQuiz}>Submit</button> : <button className='m-4 text-lg border p-2 bg-purple-400 rounded-xl font-bold text-black' onClick={nextQuestion}>Next {currentGame.questionIdx + 1}/5</button>
 
                 }
             </div>

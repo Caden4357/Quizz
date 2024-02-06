@@ -9,7 +9,8 @@ const Homepage = (props) => {
 
     const beginQuiz = async (e) => {
         const game = await startQuiz()
-        setCurrentGame({...currentGame, questions: game, questionIdx: 0})
+        console.log(game);
+        setCurrentGame({...currentGame, category:game.category, questions: game, questionIdx: 0, })
         setTimeout(() => {
             navigate('/quiz')
         }, 200);
