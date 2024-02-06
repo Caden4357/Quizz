@@ -25,7 +25,12 @@ const Question = ({ time }) => {
     }
     const handleChange = (answer) => {
         setSelectedAnswer(answer.text)
-        setcurrentGame.currentQuestion({ ...currentGame.currentQuestion, incorrectAnswers: currentGame.currentQuestion.incorrectAnswers.map((ansr) => ansr.text === answer.text ? { ...ansr, isChecked: true } : { ...ansr, isChecked: false }) })
+        console.log(answer.text, selectedAnswer, currentGame.currentQuestion.correctAnswer);
+        // ! Getting error currentQuestion is not defined why?
+
+
+        setCurrentGame({ ...currentGame, currentQuestion: {...currentGame.currentQuestion, incorrectAnswers:currentGame.currentQuestion.incorrectAnswers.map((ansr) => ansr.text === answer.text ? { ...ansr, isChecked: true } : { ...ansr, isChecked: false })} })
+        // setCurrentGame({ ...currentGame, currentQuestion: {...currentQuestion, incorrectAnswers:currentQuestion.incorrectAnswers.map((ansr) => ansr.text === answer.text ? { ...ansr, isChecked: true } : { ...ansr, isChecked: false })} })
 
     }
     const submitQuiz = () => {
