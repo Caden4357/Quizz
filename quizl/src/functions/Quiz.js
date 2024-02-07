@@ -19,6 +19,7 @@ const startQuiz = async (category) => {
         if(!category){
             category = 'Random'
         }
+        console.log('CATEGORY ', category);
         response.data.category = category
         return response.data
     }

@@ -14,14 +14,14 @@ const Question = ({ time }) => {
 
 
     useEffect(() => {
-        setCurrentGame({ ...currentGame, currentQuestion: currentGame.questions[currentGame.questionIdx] });
+        setCurrentGame(prev => ({ ...prev, currentQuestion: prev.questions[currentGame.questionIdx] }));
     }, [currentGame.questionIdx])
 
     const nextQuestion = () => {
         if (selectedAnswer === currentGame.currentQuestion.correctAnswer) {
-            setCurrentGame({ ...currentGame, score: currentGame.score++ })
+            setCurrentGame(prev => ({ ...prev, score: prev.score++ }))
         }
-        setCurrentGame({ ...currentGame, questionIdx: currentGame.questionIdx + 1 })
+        setCurrentGame(prev => ({ ...prev, questionIdx: prev.questionIdx + 1 }))
         setSelectedAnswer(null)
     }
     const handleChange = (answer) => {
@@ -40,7 +40,7 @@ const Question = ({ time }) => {
     }
     const submitQuiz = () => {
         if (selectedAnswer === currentGame.currentQuestion.correctAnswer) {
-            setCurrentGame({ ...currentGame, score: currentGame.score + 1 })
+            setCurrentGame(prev => ({ ...prev, score: prev.score + 1 }))
         }
         setSubmitted(true)
         const finalGame = {
@@ -48,6 +48,7 @@ const Question = ({ time }) => {
             score: currentGame.score,
             numberOfQuestions: currentGame.questions.length
         }
+        console.log('FINAL GAME', finalGame);
         axios.post('http://localhost:8000/api/post/quiz', finalGame, { withCredentials: true })
             .then(res => {
                 console.log(res)
@@ -76,7 +77,7 @@ const Question = ({ time }) => {
 
             <div className='w-2/4 mx-auto p-16 bg-indigo-900 bs-question rounded-2xl'>
 
-                <Countdown date={time ? Date.now() + time : Date.now() + 30000} renderer={renderer} />
+                {/* <Countdown date={time ? Date.now() + time : Date.now() + 30000} renderer={renderer} /> */}
                 <h3 className='text-2xl mb-6'>Category: {currentGame.currentQuestion?.category}</h3>
                 <h3 className='text-2xl mb-6'>{currentGame.currentQuestion?.question?.text}</h3>
                 <ul>

@@ -11,7 +11,7 @@ const Category = (props) => {
 
     const chooseCategory = async (e) => {
         const game = await startQuiz(e.target.alt)
-        setCurrentGame({...currentGame, questions: game, questionIdx: 0})
+        setCurrentGame({...currentGame, category:game.category, questions: game, questionIdx: 0, score: 0})
         setTimeout(() => {
             navigate('/quiz')
         }, 200);

@@ -8,6 +8,9 @@ import Login from './components/LoginReg/Login'
 import Reg from './components/LoginReg/Reg'
 import Quiz from './components/Homepage/Quiz'
 import { UserProvider } from './context/UserContext'
+// ! Immediate fixes
+// ! Score is one behind when submitting the quiz I think because of the async nature of the state update
+// ! Timer is not working properly it needs to reset when the next question is loaded currently it just keeps counting down
 // ? Add a feature to choose a category ✔️
 // ? Add context for question and score ✔️
 // ? Login and register ✔️

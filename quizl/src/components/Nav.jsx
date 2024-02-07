@@ -25,7 +25,7 @@ const Nav = ({ beginQuiz }) => {
                 }
                 
             </div>
-            <Link to={'/'}><h1 className='text-8xl underline mb-4 text-purple-600'>QuizL</h1></Link>
+            <Link to={'/'}><h1 className='text-8xl underline mb-4 text-purple-600'>QuizGameZ</h1></Link>
             
             <h1 className='text-4xl underline mb-4 text-purple-600'>All In One Trivia Game</h1>
         </div>
