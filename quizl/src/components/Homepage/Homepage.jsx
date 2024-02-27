@@ -5,12 +5,17 @@ import startQuiz from '../../functions/Quiz';
 import { Link, useNavigate } from 'react-router-dom'
 const Homepage = (props) => {
     const navigate = useNavigate()
-    const {currentGame, setCurrentGame} = useContext(QuizContext)
+    // const {currentGame, setCurrentGame} = useContext(QuizContext)
+    const {gameReducer, dispatch} = useContext(QuizContext)
+
 
     const beginQuiz = async (e) => {
         const game = await startQuiz()
         console.log('GAME', game);
-        setCurrentGame({...currentGame, category:game.category, questions: game, questionIdx: 0, score: 0})
+        dispatch({type: 'SET_SCORE', payload: 0})
+        dispatch({type: 'SET_QUESTION_IDX', payload: 0})
+        dispatch({type: 'SET_CATEGORY', payload: game.category})
+        dispatch({type: 'SET_QUESTIONS', payload: game})
         setTimeout(() => {
             navigate('/quiz')
         }, 200);
