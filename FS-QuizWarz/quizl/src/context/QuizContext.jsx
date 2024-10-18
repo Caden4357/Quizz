@@ -43,7 +43,7 @@ const reducer = (state, action) => {
     }
 }
 
-// ! Try making this a reducer to potentially fix score error
+
 export const QuizProvider = (props) => {
     const [gameReducer, dispatch] = useReducer(reducer, initialState)
     return (

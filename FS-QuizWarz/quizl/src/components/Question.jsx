@@ -62,10 +62,8 @@ const Question = ({ time }) => {
         }
         else {
             api.start()
-            const progressPercentage = ((30 - seconds) / 30) * 100;
-            return <svg style={{ width: '50px', height: '50px', margin: '0px auto' }}>
-                <circle r="18" cx="20" cy="20"></circle>
-            </svg>
+            // const progressPercentage = ((30 - seconds) / 30) * 100;
+            return seconds
         }
     }
     return (

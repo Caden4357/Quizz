@@ -1,0 +1,22 @@
+/*  */
+
+svg circle {
+    stroke-dasharray: 113px;
+    stroke-dashoffset: 0px;
+    stroke-linecap: round;
+    stroke-width: 4px;
+    stroke: white;
+    height: 100px;
+    /* fill: red; */
+    animation: countdown 30s linear infinite forwards;
+}
+
+@keyframes countdown {
+    from {
+        stroke-dashoffset: 0px;
+    }
+
+    to {
+        stroke-dashoffset: 113px;
+    }
+}
