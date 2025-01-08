@@ -6,12 +6,14 @@ import { QuizContext } from '../../context/QuizContext';
 import images from './images';
 const Category = (props) => {
     const navigate = useNavigate()
-    const {currentGame, setCurrentGame} = useContext(QuizContext)
+    const {gameReducer, dispatch} = useContext(QuizContext)
 
 
     const chooseCategory = async (e) => {
         const game = await startQuiz(e.target.alt)
-        setCurrentGame({...currentGame, category:game.category, questions: game, questionIdx: 0, score: 0})
+        dispatch({type: 'SET_CATEGORY', payload: e.target.alt})
+        console.log('GAME: ',game);
+        dispatch({type: 'SET_QUESTIONS', payload: game})
         setTimeout(() => {
             navigate('/quiz')
         }, 200);

@@ -38,6 +38,11 @@ const reducer = (state, action) => {
                 ...state,
                 score: action.payload
             }
+        case 'RESET_GAME':
+            return {
+                ...initialState,
+                questions: [{}]
+            }
         default:
             return state
     }
